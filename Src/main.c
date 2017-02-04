@@ -145,23 +145,11 @@ int main(void) {
       {CS6_Pin,CS6_GPIO_Port},{CS7_Pin,CS7_GPIO_Port}
   };
 
-  uint16_t cs_pins[8] = { CS0_Pin, CS1_Pin, CS2_Pin, CS3_Pin, CS4_Pin, CS5_Pin, CS6_Pin, CS7_Pin };
-
-  GPIO_TypeDef* cs_ports[8] = { CS0_GPIO_Port, CS1_GPIO_Port, CS2_GPIO_Port,
-  CS3_GPIO_Port, CS4_GPIO_Port, CS5_GPIO_Port, CS6_GPIO_Port, CS7_GPIO_Port };
-
-  for (unsigned int idx = 0; idx < 8; idx++) {
-    HAL_GPIO_WritePin(cs_ports[idx], cs_pins[idx], GPIO_PIN_SET);
+  for (unsigned int idx = 0; idx < TRANSDUCER_NUMBER; idx++) {
+    HAL_GPIO_WritePin(device_infos[idx].ss_port, device_infos[idx].ss_pin, GPIO_PIN_SET);
   }
 
   /* USER CODE BEGIN 2 */
-
-  /*
-  for (uint8_t idx = 0; idx < BUFFER_SIZE_SPI3; idx++) {
-    tx_buffer_3[idx] = 0x11;
-    shadow_buffer_3_0[idx] = 0x22;
-    shadow_buffer_3_1[idx] = 0x33;
-  }*/
   /* USER CODE END 2 */
 
   /* Infinite loop */
