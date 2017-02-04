@@ -55,6 +55,7 @@ uint8_t rx_buffer_1[BUFFER_SIZE_SPI1];
 
 Controller_State slave_state = READ_CONFIG;
 uint8_t togg = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -64,7 +65,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
-void cp_clean_buffer(uint8_t dest_buffer[], uint8_t dest_size, uint8_t src_buffer[], uint8_t src_size) {
+static inline void cp_clean_buffer(uint8_t dest_buffer[], uint8_t dest_size, uint8_t src_buffer[], uint8_t src_size) {
   for (uint8_t idx = 0; idx < src_size; idx++) {
     dest_buffer[idx] = src_buffer[idx];
   }
@@ -74,7 +75,7 @@ void cp_clean_buffer(uint8_t dest_buffer[], uint8_t dest_size, uint8_t src_buffe
   }*/
 }
 
-void set_state(uint8_t command_idx) {
+static inline void set_state(uint8_t command_idx) {
   switch (command_idx) {
     case 0xFD:
       slave_state = MONITOR;
@@ -137,6 +138,13 @@ int main(void) {
   MX_SPI3_Init();
   MX_SPI1_Init();
 
+  static struct Transducer_SS_Info device_infos[8] = {
+      {CS0_Pin,CS0_GPIO_Port},{CS1_Pin,CS1_GPIO_Port},
+      {CS2_Pin,CS2_GPIO_Port},{CS3_Pin,CS3_GPIO_Port},
+      {CS4_Pin,CS4_GPIO_Port},{CS5_Pin,CS5_GPIO_Port},
+      {CS6_Pin,CS6_GPIO_Port},{CS7_Pin,CS7_GPIO_Port}
+  };
+
   uint16_t cs_pins[8] = { CS0_Pin, CS1_Pin, CS2_Pin, CS3_Pin, CS4_Pin, CS5_Pin, CS6_Pin, CS7_Pin };
 
   GPIO_TypeDef* cs_ports[8] = { CS0_GPIO_Port, CS1_GPIO_Port, CS2_GPIO_Port,
@@ -158,7 +166,7 @@ int main(void) {
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  ad7730_softreset(0);
+  ad7730_softreset(0, device_infos);
   HAL_SPI_TransmitReceive_DMA(&hspi3, tx_buffer_3, rx_buffer_3, BUFFER_SIZE_SPI3);
   while (1) {
     /* USER CODE END WHILE */
@@ -173,7 +181,7 @@ int main(void) {
         break;
 
       case MONITOR:
-        ad7730_read_input(0, rx_buffer_1);
+        ad7730_read_input(0, rx_buffer_1, device_infos);
         cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, rx_buffer_1, BUFFER_SIZE_SPI1);
         break;
 

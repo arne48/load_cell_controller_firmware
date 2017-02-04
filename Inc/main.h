@@ -36,7 +36,8 @@
   /* Includes ------------------------------------------------------------------*/
 
 /* USER CODE BEGIN Includes */
-
+#include "stdint.h"
+#include "stm32f103xe.h"
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
@@ -63,6 +64,11 @@ typedef enum {
   READ_CONFIG = 0x02,
   PROVIDE_DATA = 0x03
 } Controller_State;
+
+struct Transducer_SS_Info {
+  uint16_t ss_pin;
+  GPIO_TypeDef* ss_port;
+};
 
 #define BUFFER_SIZE_SPI3 64
 #define BUFFER_SIZE_SPI1 3
