@@ -49,6 +49,7 @@ uint8_t tx_buffer_3[BUFFER_SIZE_SPI3];
 uint8_t rx_buffer_3[BUFFER_SIZE_SPI3];
 uint8_t shadow_buffer_3_0[BUFFER_SIZE_SPI3];
 uint8_t shadow_buffer_3_1[BUFFER_SIZE_SPI3];
+uint8_t shadow_buffer_3_2[BUFFER_SIZE_SPI3];
 uint8_t tx_buffer_1[BUFFER_SIZE_SPI1];
 uint8_t rx_buffer_1[BUFFER_SIZE_SPI1];
 
@@ -94,7 +95,7 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
   shadow_buffer_3_1[63] = slave_state;
 
   if (hspi->Instance == SPI3) {
-    switch (togg % 3) {
+    switch (0){//togg % 3) {
       case 1:
         HAL_SPI_TransmitReceive_DMA(&hspi3, shadow_buffer_3_0, rx_buffer_3, BUFFER_SIZE_SPI3);
         break;
@@ -172,9 +173,8 @@ int main(void) {
         break;
 
       case MONITOR:
-        ad7730_read_register(0, REG_FILTER_REGISTER, rx_buffer_1);
+        ad7730_read_input(0, rx_buffer_1);
         cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, rx_buffer_1, BUFFER_SIZE_SPI1);
-        ad7730_read_register(0, REG_MODE_REGISTER, rx_buffer_1);
         break;
 
     }

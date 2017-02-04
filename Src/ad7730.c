@@ -17,15 +17,7 @@ void ad7730_softreset(uint8_t device) {
   HAL_GPIO_WritePin(CS0_GPIO_Port, CS0_Pin, GPIO_PIN_SET);
 }
 
-void ad7730_system_full_scale_calibration(uint8_t device) {
-
-}
-
 void ad7730_system_zero_scale_calibration(uint8_t device) {
-
-}
-
-void ad7730_internal_full_scale_calibration(uint8_t device) {
 
 }
 
@@ -35,9 +27,9 @@ void ad7730_internal_zero_scale_calibration(uint8_t device) {
 
 void ad7730_read_input(uint8_t device, uint8_t data[]) {
 
-  uint8_t command[2] = {0x51, 0x00};
+  uint8_t conversion_command[2] = {0x31,0xA0};
 
-  ad7730_write_register(0, REG_MODE_REGISTER, command);
+  ad7730_write_register(0, REG_MODE_REGISTER, conversion_command);
 
   ad7730_read_register(0, REG_DATA_REGISTER, data);
 
