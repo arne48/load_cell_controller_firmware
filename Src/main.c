@@ -155,6 +155,7 @@ int main(void) {
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   ad7730_softreset(0, device_infos);
+  ad7730_setup_device(0, device_infos);
   HAL_SPI_TransmitReceive_DMA(&hspi3, tx_buffer_3, rx_buffer_3, BUFFER_SIZE_SPI3);
   while (1) {
     /* USER CODE END WHILE */
@@ -169,8 +170,11 @@ int main(void) {
         break;
 
       case MONITOR:
-        ad7730_read_input(0, rx_buffer_1, device_infos, CHANNEL_A2);
-        cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, rx_buffer_1, BUFFER_SIZE_SPI1);
+        ad7730_read_all_inputs(shadow_buffer_3_0, device_infos);
+        cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, shadow_buffer_3_0, BUFFER_SIZE_SPI3);
+
+//        ad7730_read_input(0, rx_buffer_1, device_infos, CHANNEL_A2);
+//        cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, rx_buffer_1, BUFFER_SIZE_SPI1);
         break;
 
     }
