@@ -117,6 +117,11 @@ DATA_WIDTH_2B = 0x02,
 DATA_WIDTH_3B = 0x03,
 } AD7730_DataWidthTypeDef;
 
+typedef enum {
+CHANNEL_A1 = 0x00,
+CHANNEL_A2 = 0x01
+} AD7730_ChannelIndex;
+
 static uint8_t AD7730_REGISTER_SIZE[8] = {1, 3, 2, 3, 1, 3, 3, 3};
 
 void ad7730_setup_all(struct Transducer_SS_Info device_infos[]);
@@ -125,7 +130,7 @@ void ad7730_softreset(uint8_t device, struct Transducer_SS_Info device_infos[]);
 void ad7730_system_zero_scale_calibration(uint8_t device, struct Transducer_SS_Info device_infos[]);
 void ad7730_internal_zero_scale_calibration(uint8_t device, struct Transducer_SS_Info device_infos[]);
 void ad7730_set_communication_mode(uint8_t device, AD7730_CommunicationTypeDef com_type, AD7730_RegisterTypeDef reg_type, struct Transducer_SS_Info device_infos[]);
-void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info device_infos[]);
+void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info device_infos[], AD7730_ChannelIndex channel_index);
 void ad7730_read_all_inputs(uint8_t data[], struct Transducer_SS_Info device_infos[]);
 void ad7730_read_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t data[], struct Transducer_SS_Info device_infos[]);
 void ad7730_write_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t data[], struct Transducer_SS_Info device_infos[]);

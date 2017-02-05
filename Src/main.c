@@ -169,7 +169,7 @@ int main(void) {
         break;
 
       case MONITOR:
-        ad7730_read_input(0, rx_buffer_1, device_infos);
+        ad7730_read_input(0, rx_buffer_1, device_infos, CHANNEL_A2);
         cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, rx_buffer_1, BUFFER_SIZE_SPI1);
         break;
 

@@ -25,9 +25,9 @@ void ad7730_internal_zero_scale_calibration(uint8_t device, struct Transducer_SS
 
 }
 
-void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info device_infos[]) {
+void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info device_infos[], AD7730_ChannelIndex channel_index) {
 
-  uint8_t conversion_command[2] = {0x31,0xA0};
+  uint8_t conversion_command[2] = {0x51,0xA0 | channel_index};
 
   ad7730_write_register(device, REG_MODE_REGISTER, conversion_command, device_infos);
 
@@ -36,7 +36,11 @@ void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info
 }
 
 void ad7730_read_all_inputs(uint8_t data[], struct Transducer_SS_Info device_infos[]) {
+  for(uint8_t transd_idx = 0; transd_idx < TRANSDUCER_NUMBER; transd_idx++){
+    uint8_t buffer_offset = transd_idx * 2;
 
+
+  }
 }
 
 void ad7730_set_communication_mode(uint8_t device, AD7730_CommunicationTypeDef com_type, AD7730_RegisterTypeDef reg_type, struct Transducer_SS_Info device_infos[]) {
