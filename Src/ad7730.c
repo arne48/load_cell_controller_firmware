@@ -66,21 +66,16 @@ void ad7730_read_all_inputs(uint8_t data[], struct Transducer_SS_Info device_inf
 
 void ad7730_set_communication_mode(uint8_t device, AD7730_CommunicationTypeDef com_type, AD7730_RegisterTypeDef reg_type, struct Transducer_SS_Info device_infos[]) {
 
-  HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
-
   uint8_t command[1] = { com_type | reg_type };
   HAL_SPI_Transmit(&hspi1, command, 1, 10);
 
-  HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
-
-  HAL_Delay(14);
 }
 
 void ad7730_read_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t data[], struct Transducer_SS_Info device_infos[]) {
 
-  ad7730_set_communication_mode(device, OP_READ, reg, device_infos);
-
   HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
+
+  ad7730_set_communication_mode(device, OP_READ, reg, device_infos);
 
   HAL_SPI_Receive(&hspi1, data, AD7730_REGISTER_SIZE[reg], 10);
 
@@ -90,12 +85,15 @@ void ad7730_read_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t da
 
 void ad7730_write_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t data[], struct Transducer_SS_Info device_infos[]) {
 
-  ad7730_set_communication_mode(device, OP_WRITE, reg, device_infos);
-
   HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
+
+  ad7730_set_communication_mode(device, OP_WRITE, reg, device_infos);
 
   HAL_SPI_Transmit(&hspi1, data, AD7730_REGISTER_SIZE[reg], 10);
 
   HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
+
+  //FIXME
+    HAL_Delay(14);
 
 }
