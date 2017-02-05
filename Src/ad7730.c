@@ -15,7 +15,7 @@ void ad7730_softreset(uint8_t device, struct Transducer_SS_Info device_infos[]) 
   HAL_GPIO_WritePin(device_infos[device].ss_port, device_infos[device].ss_pin, GPIO_PIN_RESET);
 
   uint8_t command[5] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
-  HAL_SPI_Transmit(&hspi1, command, 5, 100);
+  HAL_SPI_Transmit(&hspi1, command, 5, 10);
 
   HAL_GPIO_WritePin(device_infos[device].ss_port, device_infos[device].ss_pin, GPIO_PIN_SET);
 }
@@ -38,7 +38,7 @@ void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info
   HAL_Delay(20);
 
 }
-
+uint8_t t = 0;
 void ad7730_read_all_inputs(uint8_t data[], struct Transducer_SS_Info device_infos[]) {
 
  uint8_t conversion_command[2] = {0x51,0xA4 | CHANNEL_A1};
@@ -59,28 +59,32 @@ void ad7730_read_all_inputs(uint8_t data[], struct Transducer_SS_Info device_inf
    ad7730_read_register(i, REG_DATA_REGISTER, &data[(i*6)+3], device_infos);
  }
 
+ data[7] = t;
+ t++;
+
 }
 
 void ad7730_set_communication_mode(uint8_t device, AD7730_CommunicationTypeDef com_type, AD7730_RegisterTypeDef reg_type, struct Transducer_SS_Info device_infos[]) {
 
-  HAL_GPIO_WritePin(device_infos[device].ss_port, device_infos[device].ss_pin, GPIO_PIN_RESET);
+  HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
 
   uint8_t command[1] = { com_type | reg_type };
-  HAL_SPI_Transmit(&hspi1, command, 1, 100);
+  HAL_SPI_Transmit(&hspi1, command, 1, 10);
 
-  HAL_GPIO_WritePin(device_infos[device].ss_port, device_infos[device].ss_pin, GPIO_PIN_SET);
+  HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
 
+  HAL_Delay(14);
 }
 
 void ad7730_read_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t data[], struct Transducer_SS_Info device_infos[]) {
 
   ad7730_set_communication_mode(device, OP_READ, reg, device_infos);
 
-  HAL_GPIO_WritePin(device_infos[device].ss_port, device_infos[device].ss_pin, GPIO_PIN_RESET);
+  HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
 
-  HAL_SPI_Receive(&hspi1, data, AD7730_REGISTER_SIZE[reg], 100);
+  HAL_SPI_Receive(&hspi1, data, AD7730_REGISTER_SIZE[reg], 10);
 
-  HAL_GPIO_WritePin(device_infos[device].ss_port, device_infos[device].ss_pin, GPIO_PIN_SET);
+  HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
 
 }
 
@@ -88,10 +92,10 @@ void ad7730_write_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t d
 
   ad7730_set_communication_mode(device, OP_WRITE, reg, device_infos);
 
-  HAL_GPIO_WritePin(device_infos[device].ss_port, device_infos[device].ss_pin, GPIO_PIN_RESET);
+  HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
 
-  HAL_SPI_Transmit(&hspi1, data, AD7730_REGISTER_SIZE[reg], 100);
+  HAL_SPI_Transmit(&hspi1, data, AD7730_REGISTER_SIZE[reg], 10);
 
-  HAL_GPIO_WritePin(device_infos[device].ss_port, device_infos[device].ss_pin, GPIO_PIN_SET);
-  HAL_Delay(15);
+  HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
+
 }
