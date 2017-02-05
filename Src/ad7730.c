@@ -2,7 +2,7 @@
 
 #define WAIT 20
 void ad7730_setup_device(uint8_t device, struct Transducer_SS_Info device_infos[]) {
-  uint8_t conversion_command[3] = {0x20,0x02, 0x10};
+  uint8_t conversion_command[3] = {0x04,0x01, 0x00};
   ad7730_write_register(device, REG_MODE_REGISTER, conversion_command, device_infos);
 
 }
@@ -30,20 +30,24 @@ void ad7730_internal_zero_scale_calibration(uint8_t device, struct Transducer_SS
 
 void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info device_infos[], AD7730_ChannelIndex channel_index) {
 
-  uint8_t conversion_command[2] = {0x51,0xA0 | channel_index};
+  uint8_t conversion_command[2] = {0x31,0xA4 | channel_index};
 
   ad7730_write_register(device, REG_MODE_REGISTER, conversion_command, device_infos);
-  HAL_Delay(20);
+
+
+  while(HAL_GPIO_ReadPin(DEV0_RDY_GPIO_Port, DEV0_RDY_Pin) == GPIO_PIN_SET){
+
+  }
+
   ad7730_read_register(device, REG_DATA_REGISTER, data, device_infos);
-  HAL_Delay(20);
 
 }
 uint8_t t = 0;
 void ad7730_read_all_inputs(uint8_t data[], struct Transducer_SS_Info device_infos[]) {
 
- uint8_t conversion_command[2] = {0x51,0xA4 | CHANNEL_A1};
+ uint8_t conversion_command_a1[2] = {0x51,0xA4 | CHANNEL_A1};
  for(uint8_t i =0; i < 8; i++){
-   ad7730_write_register(i, REG_MODE_REGISTER, conversion_command, device_infos);
+   ad7730_write_register(i, REG_MODE_REGISTER, conversion_command_a1, device_infos);
  }
 
  for(uint8_t i =0; i < 8; i++){

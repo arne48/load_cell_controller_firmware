@@ -42,6 +42,8 @@
 
 /* Private define ------------------------------------------------------------*/
 
+#define DEV0_RDY_Pin GPIO_PIN_14
+#define DEV0_RDY_GPIO_Port GPIOC
 #define CS7_Pin GPIO_PIN_0
 #define CS7_GPIO_Port GPIOC
 #define CS6_Pin GPIO_PIN_1
