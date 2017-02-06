@@ -1,9 +1,14 @@
 #include "ad7730.h"
 
-#define WAIT 20
 void ad7730_setup_device(uint8_t device, struct Transducer_SS_Info device_infos[]) {
-  uint8_t conversion_command[3] = {0x04,0x01, 0x00};
-  ad7730_write_register(device, REG_MODE_REGISTER, conversion_command, device_infos);
+  uint8_t conversion_command[3] = {0x01,0x42, 0x00};
+  ad7730_write_register(device, REG_FILTER_REGISTER, conversion_command, device_infos);
+
+}
+
+void ad7730_set_filter(uint8_t device, struct Transducer_SS_Info device_infos[]) {
+  uint8_t conversion_command[3] = {0x01,0x42, 0x00};
+  ad7730_write_register(device, REG_FILTER_REGISTER, conversion_command, device_infos);
 
 }
 
@@ -14,8 +19,8 @@ void ad7730_setup_all(struct Transducer_SS_Info device_infos[]) {
 void ad7730_softreset(uint8_t device, struct Transducer_SS_Info device_infos[]) {
   HAL_GPIO_WritePin(device_infos[device].ss_port, device_infos[device].ss_pin, GPIO_PIN_RESET);
 
-  uint8_t command[5] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
-  HAL_SPI_Transmit(&hspi1, command, 5, 10);
+  uint8_t command[4] = { 0xFF, 0xFF, 0xFF, 0xFF};
+  HAL_SPI_Transmit(&hspi1, command, 4, 10);
 
   HAL_GPIO_WritePin(device_infos[device].ss_port, device_infos[device].ss_pin, GPIO_PIN_SET);
 }
@@ -30,7 +35,7 @@ void ad7730_internal_zero_scale_calibration(uint8_t device, struct Transducer_SS
 
 void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info device_infos[], AD7730_ChannelIndex channel_index) {
 
-  uint8_t conversion_command[2] = {0x31,0xA4 | channel_index};
+  uint8_t conversion_command[2] = {0x51,0xA0 | channel_index};
 
   ad7730_write_register(device, REG_MODE_REGISTER, conversion_command, device_infos);
 

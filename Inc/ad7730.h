@@ -136,5 +136,6 @@ void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info
 void ad7730_read_all_inputs(uint8_t data[], struct Transducer_SS_Info device_infos[]);
 void ad7730_read_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t data[], struct Transducer_SS_Info device_infos[]);
 void ad7730_write_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t data[], struct Transducer_SS_Info device_infos[]);
+void ad7730_set_filter(uint8_t device, struct Transducer_SS_Info device_infos[]);
 
 #endif /* AD7730_H_ */
