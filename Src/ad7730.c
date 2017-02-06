@@ -1,8 +1,6 @@
 #include "ad7730.h"
 
 void ad7730_setup_device(uint8_t device, struct Transducer_SS_Info device_infos[]) {
-  uint8_t conversion_command[3] = {0x01,0x42, 0x00};
-  ad7730_write_register(device, REG_FILTER_REGISTER, conversion_command, device_infos);
 
 }
 
@@ -40,9 +38,9 @@ void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info
   ad7730_write_register(device, REG_MODE_REGISTER, conversion_command, device_infos);
 
 
-  while(HAL_GPIO_ReadPin(DEV0_RDY_GPIO_Port, DEV0_RDY_Pin) == GPIO_PIN_SET){
-
-  }
+  //TODO
+  //Not really needed. Wait for new board revision.
+  //while(HAL_GPIO_ReadPin(DEV0_RDY_GPIO_Port, DEV0_RDY_Pin) == GPIO_PIN_SET){}
 
   ad7730_read_register(device, REG_DATA_REGISTER, data, device_infos);
 

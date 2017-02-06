@@ -52,6 +52,14 @@
 #define CS5_GPIO_Port GPIOC
 #define CS4_Pin GPIO_PIN_3
 #define CS4_GPIO_Port GPIOC
+#define RDY7_Pin GPIO_PIN_0
+#define RDY7_GPIO_Port GPIOA
+#define RDY6_Pin GPIO_PIN_1
+#define RDY6_GPIO_Port GPIOA
+#define RDY5_Pin GPIO_PIN_2
+#define RDY5_GPIO_Port GPIOA
+#define RDY4_Pin GPIO_PIN_3
+#define RDY4_GPIO_Port GPIOA
 #define CS3_Pin GPIO_PIN_6
 #define CS3_GPIO_Port GPIOC
 #define CS2_Pin GPIO_PIN_7
@@ -60,6 +68,14 @@
 #define CS1_GPIO_Port GPIOC
 #define CS0_Pin GPIO_PIN_9
 #define CS0_GPIO_Port GPIOC
+#define RDY2_Pin GPIO_PIN_9
+#define RDY2_GPIO_Port GPIOA
+#define RDY1_Pin GPIO_PIN_10
+#define RDY1_GPIO_Port GPIOA
+#define RDY0_Pin GPIO_PIN_11
+#define RDY0_GPIO_Port GPIOA
+#define RDY3_Pin GPIO_PIN_12
+#define RDY3_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 typedef enum {
   MONITOR = 0x01,
