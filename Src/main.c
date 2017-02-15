@@ -173,13 +173,15 @@ int main(void)
 //        ad7730_read_all_inputs(shadow_buffer_3_0, device_infos);
 //        cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, shadow_buffer_3_0, BUFFER_SIZE_SPI3);
 
-//        ad7730_read_input(0, rx_buffer_1, device_infos, CHANNEL_A2);
+//        ad7730_read_input(1, rx_buffer_1, device_infos, CHANNEL_A1);
 //        cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, rx_buffer_1, BUFFER_SIZE_SPI1);
 
-        ad7730_set_filter(0, device_infos);
-        ad7730_read_input(0, shadow_buffer_3_0, device_infos, CHANNEL_A1);
-        ad7730_set_filter(0, device_infos);
-        ad7730_read_input(0, &shadow_buffer_3_0[3], device_infos, CHANNEL_A2);
+        for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
+          ad7730_set_filter(dev_idx, device_infos);
+          ad7730_read_input(dev_idx, &shadow_buffer_3_0[dev_idx * 6], device_infos, CHANNEL_A1);
+          ad7730_set_filter(dev_idx, device_infos);
+          ad7730_read_input(dev_idx, &shadow_buffer_3_0[(dev_idx * 6) + 3], device_infos, CHANNEL_A2);
+        }
         cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, shadow_buffer_3_0, BUFFER_SIZE_SPI3);
         break;
 

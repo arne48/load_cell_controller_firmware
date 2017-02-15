@@ -39,8 +39,10 @@ void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info
 
 
   //TODO
-  //Not really needed. Wait for new board revision.
-  //while(HAL_GPIO_ReadPin(DEV0_RDY_GPIO_Port, DEV0_RDY_Pin) == GPIO_PIN_SET){}
+  //Not really needed in worst case data will be latched on next read. Wait for new board revision.
+#ifdef USING_READY_SIGNALS
+  while(HAL_GPIO_ReadPin(DEV0_RDY_GPIO_Port, DEV0_RDY_Pin) == GPIO_PIN_SET){}
+#endif
 
   ad7730_read_register(device, REG_DATA_REGISTER, data, device_infos);
 
@@ -101,6 +103,7 @@ void ad7730_write_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t d
   HAL_GPIO_TogglePin(device_infos[device].ss_port, device_infos[device].ss_pin);
 
   //FIXME
-    HAL_Delay(14);
+//    HAL_Delay(14);
+  for(uint32_t wait = 0; wait < 2500; wait++){}
 
 }

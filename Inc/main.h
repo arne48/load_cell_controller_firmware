@@ -91,6 +91,9 @@ struct Transducer_SS_Info {
 #define BUFFER_SIZE_SPI3 64
 #define BUFFER_SIZE_SPI1 3
 #define TRANSDUCER_NUMBER 8
+
+
+//#define USING_READY_SIGNALS
 /* USER CODE END Private defines */
 
 /**
