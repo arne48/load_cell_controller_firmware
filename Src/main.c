@@ -49,12 +49,12 @@ uint8_t tx_buffer_3[BUFFER_SIZE_SPI3];
 uint8_t rx_buffer_3[BUFFER_SIZE_SPI3];
 uint8_t shadow_buffer_3_0[BUFFER_SIZE_SPI3];
 uint8_t shadow_buffer_3_1[BUFFER_SIZE_SPI3];
-uint8_t shadow_buffer_3_2[BUFFER_SIZE_SPI3];
 uint8_t tx_buffer_1[BUFFER_SIZE_SPI1];
 uint8_t rx_buffer_1[BUFFER_SIZE_SPI1];
 
 Controller_State slave_state = READ_CONFIG;
-uint8_t togg = 0;
+uint8_t active_buffer = 0;
+uint8_t buffer_updated = 0;
 
 /* USER CODE END PV */
 
@@ -65,14 +65,10 @@ void Error_Handler(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
-static inline void cp_clean_buffer(uint8_t dest_buffer[], uint8_t dest_size, uint8_t src_buffer[], uint8_t src_size) {
+static inline void copy_buffer(uint8_t dest_buffer[], uint8_t dest_size, uint8_t src_buffer[], uint8_t src_size) {
   for (uint8_t idx = 0; idx < src_size; idx++) {
     dest_buffer[idx] = src_buffer[idx];
   }
-  /*
-  for (uint8_t idx = src_size; idx < dest_size; idx++) {
-    dest_buffer[idx] = 0x00;
-  }*/
 }
 
 static inline void set_state(uint8_t command_idx) {
@@ -91,24 +87,22 @@ static inline void set_state(uint8_t command_idx) {
 }
 
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
-  tx_buffer_3[63] = slave_state;
   shadow_buffer_3_0[63] = slave_state;
   shadow_buffer_3_1[63] = slave_state;
 
   if (hspi->Instance == SPI3) {
-    switch (0){//togg % 3) {
+    switch (active_buffer){
+      case 0:
+        HAL_SPI_TransmitReceive_DMA(&hspi3, shadow_buffer_3_1, rx_buffer_3, BUFFER_SIZE_SPI3);
+        buffer_updated = 1;
+        break;
+
       case 1:
         HAL_SPI_TransmitReceive_DMA(&hspi3, shadow_buffer_3_0, rx_buffer_3, BUFFER_SIZE_SPI3);
-        break;
-      case 0:
-        HAL_SPI_TransmitReceive_DMA(&hspi3, tx_buffer_3, rx_buffer_3, BUFFER_SIZE_SPI3);
-        break;
-      case 2:
-        HAL_SPI_TransmitReceive_DMA(&hspi3, shadow_buffer_3_1, rx_buffer_3, BUFFER_SIZE_SPI3);
+        buffer_updated = 1;
         break;
     }
     set_state(rx_buffer_3[0]);
-    togg++;
   }
 
 }
@@ -147,10 +141,6 @@ int main(void)
       {CS6_Pin,CS6_GPIO_Port},{CS7_Pin,CS7_GPIO_Port}
   };
 
-  /*
-  for (unsigned int idx = 0; idx < TRANSDUCER_NUMBER; idx++) {
-    HAL_GPIO_WritePin(device_infos[idx].ss_port, device_infos[idx].ss_pin, GPIO_PIN_SET);
-  }*/
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -170,19 +160,27 @@ int main(void)
         break;
 
       case MONITOR:
-//        ad7730_read_all_inputs(shadow_buffer_3_0, device_infos);
-//        cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, shadow_buffer_3_0, BUFFER_SIZE_SPI3);
-
-//        ad7730_read_input(1, rx_buffer_1, device_infos, CHANNEL_A1);
-//        cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, rx_buffer_1, BUFFER_SIZE_SPI1);
-
         for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
           ad7730_set_filter(dev_idx, device_infos);
-          ad7730_read_input(dev_idx, &shadow_buffer_3_0[dev_idx * 6], device_infos, CHANNEL_A1);
+          ad7730_read_input(dev_idx, &tx_buffer_3[dev_idx * 6], device_infos, CHANNEL_A1);
           ad7730_set_filter(dev_idx, device_infos);
-          ad7730_read_input(dev_idx, &shadow_buffer_3_0[(dev_idx * 6) + 3], device_infos, CHANNEL_A2);
+          ad7730_read_input(dev_idx, &tx_buffer_3[(dev_idx * 6) + 3], device_infos, CHANNEL_A2);
         }
-        cp_clean_buffer(tx_buffer_3, BUFFER_SIZE_SPI3, shadow_buffer_3_0, BUFFER_SIZE_SPI3);
+
+        if(buffer_updated == 1){
+          switch(active_buffer){
+            case 0:
+              copy_buffer(shadow_buffer_3_0, BUFFER_SIZE_SPI3, tx_buffer_3, BUFFER_SIZE_SPI3);
+              break;
+
+            case 1:
+              copy_buffer(shadow_buffer_3_1, BUFFER_SIZE_SPI3, tx_buffer_3, BUFFER_SIZE_SPI3);
+              break;
+          }
+          active_buffer ^= 1;
+          buffer_updated = 0;
+        }
+
         break;
 
     }

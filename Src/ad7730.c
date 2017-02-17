@@ -5,7 +5,7 @@ void ad7730_setup_device(uint8_t device, struct Transducer_SS_Info device_infos[
 }
 
 void ad7730_set_filter(uint8_t device, struct Transducer_SS_Info device_infos[]) {
-  uint8_t conversion_command[3] = {0x01,0x42, 0x00};
+  uint8_t conversion_command[3] = {0x08,0x42, 0x00};
   ad7730_write_register(device, REG_FILTER_REGISTER, conversion_command, device_infos);
 
 }
