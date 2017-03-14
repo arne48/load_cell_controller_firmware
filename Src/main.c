@@ -141,11 +141,22 @@ int main(void)
       {CS6_Pin,CS6_GPIO_Port},{CS7_Pin,CS7_GPIO_Port}
   };
 
+  static struct Transducer_SS_Info ready_infos[8] = {
+      {RDY0_Pin,RDY0_GPIO_Port},{RDY1_Pin,RDY1_GPIO_Port},
+      {RDY2_Pin,RDY2_GPIO_Port},{RDY3_Pin,RDY3_GPIO_Port},
+      {RDY4_Pin,RDY4_GPIO_Port},{RDY5_Pin,RDY5_GPIO_Port},
+      {RDY6_Pin,RDY6_GPIO_Port},{RDY7_Pin,RDY7_GPIO_Port}
+  };
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  ad7730_softreset(0, device_infos);
+
+  for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
+    ad7730_softreset(dev_idx, device_infos);
+  }
   HAL_SPI_TransmitReceive_DMA(&hspi3, tx_buffer_3, rx_buffer_3, BUFFER_SIZE_SPI3);
   while (1) {
   /* USER CODE END WHILE */
@@ -162,8 +173,17 @@ int main(void)
       case MONITOR:
         for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
           ad7730_set_filter(dev_idx, device_infos);
+        }
+
+        for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
           ad7730_read_input(dev_idx, &tx_buffer_3[dev_idx * 6], device_infos, CHANNEL_A1);
+        }
+
+        for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
           ad7730_set_filter(dev_idx, device_infos);
+        }
+
+        for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
           ad7730_read_input(dev_idx, &tx_buffer_3[(dev_idx * 6) + 3], device_infos, CHANNEL_A2);
         }
 

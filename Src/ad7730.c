@@ -37,7 +37,7 @@ void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info
 
   ad7730_write_register(device, REG_MODE_REGISTER, conversion_command, device_infos);
 
-
+  for(uint32_t wait = 0; wait < 2500; wait++){}
   //TODO
   //Not really needed in worst case data will be latched on next read. Wait for new board revision.
 #ifdef USING_READY_SIGNALS
