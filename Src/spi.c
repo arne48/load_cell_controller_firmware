@@ -42,6 +42,7 @@
 
 /* USER CODE END 0 */
 
+
 /* SPI1 init function */
 void MX_SPI1_Init(void)
 {

@@ -5,7 +5,7 @@ void ad7730_setup_device(uint8_t device, struct Transducer_SS_Info device_infos[
 }
 
 void ad7730_set_filter(uint8_t device, struct Transducer_SS_Info device_infos[]) {
-  uint8_t conversion_command[3] = {0x08,0x42, 0x00};
+  uint8_t conversion_command[3] = {0x08,0x40, 0x00};
   ad7730_write_register(device, REG_FILTER_REGISTER, conversion_command, device_infos);
 
 }
@@ -31,20 +31,17 @@ void ad7730_internal_zero_scale_calibration(uint8_t device, struct Transducer_SS
 
 }
 
-void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info device_infos[], AD7730_ChannelIndex channel_index) {
+void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info device_infos[], struct Transducer_RDY_Info ready_infos[], AD7730_ChannelIndex channel_index) {
 
   uint8_t conversion_command[2] = {0x51,0xA0 | channel_index};
 
   ad7730_write_register(device, REG_MODE_REGISTER, conversion_command, device_infos);
 
-  for(uint32_t wait = 0; wait < 2500; wait++){}
-  //TODO
-  //Not really needed in worst case data will be latched on next read. Wait for new board revision.
-#ifdef USING_READY_SIGNALS
-  while(HAL_GPIO_ReadPin(DEV0_RDY_GPIO_Port, DEV0_RDY_Pin) == GPIO_PIN_SET){}
-#endif
+  while(HAL_GPIO_ReadPin(ready_infos[device].rdy_port, ready_infos[device].rdy_pin) != GPIO_PIN_SET){}
 
   ad7730_read_register(device, REG_DATA_REGISTER, data, device_infos);
+
+  while(HAL_GPIO_ReadPin(ready_infos[device].rdy_port, ready_infos[device].rdy_pin) != GPIO_PIN_SET){}
 
 }
 uint8_t t = 0;
@@ -104,6 +101,6 @@ void ad7730_write_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t d
 
   //FIXME
 //    HAL_Delay(14);
-  for(uint32_t wait = 0; wait < 2500; wait++){}
+  //for(uint32_t wait = 0; wait < 2500; wait++){}
 
 }

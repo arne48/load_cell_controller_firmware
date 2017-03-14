@@ -77,6 +77,12 @@
 #define RDY3_Pin GPIO_PIN_12
 #define RDY3_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
+
+#define BUFFER_SIZE_SPI3 64
+#define BUFFER_SIZE_SPI1 3
+#define TRANSDUCER_NUMBER 8
+
+
 typedef enum {
   MONITOR = 0x01,
   READ_CONFIG = 0x02,
@@ -88,9 +94,15 @@ struct Transducer_SS_Info {
   GPIO_TypeDef* ss_port;
 };
 
-#define BUFFER_SIZE_SPI3 64
-#define BUFFER_SIZE_SPI1 3
-#define TRANSDUCER_NUMBER 8
+struct Transducer_RDY_Info {
+  uint16_t rdy_pin;
+  GPIO_TypeDef* rdy_port;
+};
+
+struct Transducer_COM_Infos {
+  struct Transducer_SS_Info slave_selects[TRANSDUCER_NUMBER];
+  struct Transducer_RDY_Info ready_pins[TRANSDUCER_NUMBER];
+};
 
 
 //#define USING_READY_SIGNALS
