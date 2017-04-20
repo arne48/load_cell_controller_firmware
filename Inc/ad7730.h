@@ -132,7 +132,7 @@ void ad7730_softreset(uint8_t device, struct Transducer_SS_Info device_infos[]);
 void ad7730_system_zero_scale_calibration(uint8_t device, struct Transducer_SS_Info device_infos[]);
 void ad7730_internal_zero_scale_calibration(uint8_t device, struct Transducer_SS_Info device_infos[]);
 void ad7730_set_communication_mode(uint8_t device, AD7730_CommunicationTypeDef com_type, AD7730_RegisterTypeDef reg_type, struct Transducer_SS_Info device_infos[]);
-void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info device_infos[], AD7730_ChannelIndex channel_index);
+void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info device_infos[], struct Transducer_RDY_Info ready_infos[], AD7730_ChannelIndex channel_index);
 void ad7730_read_all_inputs(uint8_t data[], struct Transducer_SS_Info device_infos[]);
 void ad7730_read_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t data[], struct Transducer_SS_Info device_infos[]);
 void ad7730_write_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t data[], struct Transducer_SS_Info device_infos[]);

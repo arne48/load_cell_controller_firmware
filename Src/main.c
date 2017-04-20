@@ -87,17 +87,17 @@ static inline void set_state(uint8_t command_idx) {
 }
 
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
-  shadow_buffer_3_0[63] = slave_state;
-  shadow_buffer_3_1[63] = slave_state;
 
   if (hspi->Instance == SPI3) {
     switch (active_buffer){
       case 0:
+        shadow_buffer_3_1[63] = slave_state;
         HAL_SPI_TransmitReceive_DMA(&hspi3, shadow_buffer_3_1, rx_buffer_3, BUFFER_SIZE_SPI3);
         buffer_updated = 1;
         break;
 
       case 1:
+        shadow_buffer_3_0[63] = slave_state;
         HAL_SPI_TransmitReceive_DMA(&hspi3, shadow_buffer_3_0, rx_buffer_3, BUFFER_SIZE_SPI3);
         buffer_updated = 1;
         break;
@@ -134,14 +134,14 @@ int main(void)
   MX_SPI1_Init();
 
   /* USER CODE BEGIN 2 */
-  static struct Transducer_SS_Info device_infos[8] = {
+  static struct Transducer_SS_Info slave_infos[8] = {
       {CS0_Pin,CS0_GPIO_Port},{CS1_Pin,CS1_GPIO_Port},
       {CS2_Pin,CS2_GPIO_Port},{CS3_Pin,CS3_GPIO_Port},
       {CS4_Pin,CS4_GPIO_Port},{CS5_Pin,CS5_GPIO_Port},
       {CS6_Pin,CS6_GPIO_Port},{CS7_Pin,CS7_GPIO_Port}
   };
 
-  static struct Transducer_SS_Info ready_infos[8] = {
+  static struct Transducer_RDY_Info ready_infos[8] = {
       {RDY0_Pin,RDY0_GPIO_Port},{RDY1_Pin,RDY1_GPIO_Port},
       {RDY2_Pin,RDY2_GPIO_Port},{RDY3_Pin,RDY3_GPIO_Port},
       {RDY4_Pin,RDY4_GPIO_Port},{RDY5_Pin,RDY5_GPIO_Port},
@@ -155,7 +155,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
   for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
-    ad7730_softreset(dev_idx, device_infos);
+    ad7730_softreset(dev_idx, slave_infos);
   }
   HAL_SPI_TransmitReceive_DMA(&hspi3, tx_buffer_3, rx_buffer_3, BUFFER_SIZE_SPI3);
   while (1) {
@@ -172,19 +172,35 @@ int main(void)
 
       case MONITOR:
         for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
-          ad7730_set_filter(dev_idx, device_infos);
+          ad7730_set_filter(dev_idx, slave_infos);
+        }
+
+
+        for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
+          uint8_t conversion_command[2] = {0x51,0xB4 | CHANNEL_A1};
+          ad7730_write_register(dev_idx, REG_MODE_REGISTER, conversion_command, slave_infos);
         }
 
         for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
-          ad7730_read_input(dev_idx, &tx_buffer_3[dev_idx * 6], device_infos, CHANNEL_A1);
+          while(HAL_GPIO_ReadPin(ready_infos[dev_idx].rdy_port, ready_infos[dev_idx].rdy_pin) == GPIO_PIN_SET){}
+          ad7730_read_register(dev_idx, REG_DATA_REGISTER, &tx_buffer_3[dev_idx * 6], slave_infos);
+        }
+
+
+
+        for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
+          ad7730_set_filter(dev_idx, slave_infos);
+        }
+
+
+        for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
+          uint8_t conversion_command[2] = {0x51,0xB4 | CHANNEL_A2};
+          ad7730_write_register(dev_idx, REG_MODE_REGISTER, conversion_command, slave_infos);
         }
 
         for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
-          ad7730_set_filter(dev_idx, device_infos);
-        }
-
-        for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
-          ad7730_read_input(dev_idx, &tx_buffer_3[(dev_idx * 6) + 3], device_infos, CHANNEL_A2);
+          while(HAL_GPIO_ReadPin(ready_infos[dev_idx].rdy_port, ready_infos[dev_idx].rdy_pin) == GPIO_PIN_SET){}
+          ad7730_read_register(dev_idx, REG_DATA_REGISTER, &tx_buffer_3[(dev_idx * 6) + 3], slave_infos);
         }
 
         if(buffer_updated == 1){
