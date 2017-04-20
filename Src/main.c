@@ -177,7 +177,7 @@ int main(void)
 
 
         for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
-          uint8_t conversion_command[2] = {0x51,0xA4 | CHANNEL_A1};
+          uint8_t conversion_command[2] = {0x51,0xB4 | CHANNEL_A1};
           ad7730_write_register(dev_idx, REG_MODE_REGISTER, conversion_command, slave_infos);
         }
 
@@ -194,7 +194,7 @@ int main(void)
 
 
         for(uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++){
-          uint8_t conversion_command[2] = {0x51,0xA4 | CHANNEL_A2};
+          uint8_t conversion_command[2] = {0x51,0xB4 | CHANNEL_A2};
           ad7730_write_register(dev_idx, REG_MODE_REGISTER, conversion_command, slave_infos);
         }
 
