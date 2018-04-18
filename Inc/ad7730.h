@@ -39,12 +39,7 @@
 #define MR1_WL_24_BIT 0x01
 #define MR1_WL_16_BIT 0x00
 
-#define MR0_HIREF_5V 0x80
-#define MR0_HIREF_2P5V 0x00
-#define MR0_RANGE_10MV 0x00
-#define MR0_RANGE_20MV 0x01
-#define MR0_RANGE_40MV 0x02
-#define MR0_RANGE_80MV 0x03
+
 #define MR0_CHANNEL_1 0x00
 #define MR0_CHANNEL_2 0x01
 #define MR0_CHANNEL_SHORT_1 0x02 //Used for internal noise check
@@ -80,6 +75,27 @@
 #define CURRENT_MODE_0_SETTINGS (MR0_HIREF_5V | MR0_RANGE_10MV | MR0_CHANNEL_1)*/
 
 #define AD7730_USING_DATA_LENGTH 3
+
+typedef enum {
+SINC_2048 = 0x80,  //50 Hz
+SINC_1024 = 0x40,  //100 Hz
+SINC_512 = 0x20,   //200 Hz
+SINC_256 = 0x10,   //400 Hz
+SKIP_FIR = 0x02,
+FAST_FIR = 0x01
+} AD7730_FilterSettingTypeDef;
+
+typedef enum {
+HIREF_5V = 0x80,
+HIREF_2P5V = 0x00,
+} AD7730_ReferenceTypeDef;
+
+typedef enum {
+RANGE_10MV = 0x00,
+RANGE_20MV = 0x01,
+RANGE_40MV = 0x02,
+RANGE_80MV = 0x03
+} AD7730_InputRangeTypeDef;
 
 typedef enum {
 REG_IO_REGISTER = 0x00,
@@ -122,18 +138,15 @@ DATA_WIDTH_3B = 0x03,
 typedef enum {
 CHANNEL_A1 = 0x00,
 CHANNEL_A2 = 0x01
-} AD7730_ChannelIndex;
+} AD7730_ChannelIndexTypeDef;
 
 static uint8_t AD7730_REGISTER_SIZE[8] = {1, 3, 2, 3, 1, 3, 3, 3};
 
-void ad7730_setup_all(struct Transducer_SS_Info device_infos[]);
-void ad7730_setup_device(uint8_t device, struct Transducer_SS_Info device_infos[]);
+void ad7730_setup(uint8_t device, struct Transducer_SS_Info device_infos[]);
 void ad7730_softreset(uint8_t device, struct Transducer_SS_Info device_infos[]);
 void ad7730_system_zero_scale_calibration(uint8_t device, struct Transducer_SS_Info device_infos[]);
 void ad7730_internal_zero_scale_calibration(uint8_t device, struct Transducer_SS_Info device_infos[]);
 void ad7730_set_communication_mode(uint8_t device, AD7730_CommunicationTypeDef com_type, AD7730_RegisterTypeDef reg_type, struct Transducer_SS_Info device_infos[]);
-void ad7730_read_input(uint8_t device, uint8_t data[], struct Transducer_SS_Info device_infos[], struct Transducer_RDY_Info ready_infos[], AD7730_ChannelIndex channel_index);
-void ad7730_read_all_inputs(uint8_t data[], struct Transducer_SS_Info device_infos[]);
 void ad7730_read_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t data[], struct Transducer_SS_Info device_infos[]);
 void ad7730_write_register(uint8_t device, AD7730_RegisterTypeDef reg, uint8_t data[], struct Transducer_SS_Info device_infos[]);
 void ad7730_set_filter(uint8_t device, struct Transducer_SS_Info device_infos[]);
