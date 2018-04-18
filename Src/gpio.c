@@ -4,8 +4,13 @@
   * Description        : This file provides code for the configuration
   *                      of all used GPIO pins.
   ******************************************************************************
+  ** This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
   *
-  * COPYRIGHT(c) 2017 STMicroelectronics
+  * COPYRIGHT(c) 2018 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -66,53 +71,68 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, CS7_Pin|CS6_Pin|CS5_Pin|CS4_Pin 
-                          |CS3_Pin|CS2_Pin|CS1_Pin|CS0_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOA, CS0_Pin|CS1_Pin|CS2_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PC13 PC15 PC4 PC5 
-                           PC10 PC11 PC12 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_15|GPIO_PIN_4|GPIO_PIN_5 
-                          |GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, CS3_Pin|CS4_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, CS5_Pin|CS6_Pin|CS7_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PC13 PC15 PC0 PC1 
+                           PC2 PC3 PC6 PC10 
+                           PC11 PC12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_15|GPIO_PIN_0|GPIO_PIN_1 
+                          |GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_6|GPIO_PIN_10 
+                          |GPIO_PIN_11|GPIO_PIN_12;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = DEV0_RDY_Pin;
+  /*Configure GPIO pins : PCPin PCPin PCPin PCPin */
+  GPIO_InitStruct.Pin = DEV0_RDY_Pin|RDY7_Pin|RDY6_Pin|RDY5_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(DEV0_RDY_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PCPin PCPin PCPin PCPin 
-                           PCPin PCPin PCPin PCPin */
-  GPIO_InitStruct.Pin = CS7_Pin|CS6_Pin|CS5_Pin|CS4_Pin 
-                          |CS3_Pin|CS2_Pin|CS1_Pin|CS0_Pin;
+  /*Configure GPIO pins : PAPin PAPin PAPin */
+  GPIO_InitStruct.Pin = CS0_Pin|CS1_Pin|CS2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PAPin PAPin PAPin PAPin 
-                           PAPin PAPin PAPin PAPin */
-  GPIO_InitStruct.Pin = RDY7_Pin|RDY6_Pin|RDY5_Pin|RDY4_Pin 
-                          |RDY2_Pin|RDY1_Pin|RDY0_Pin|RDY3_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA4 PA8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_8;
+  /*Configure GPIO pins : PA3 PA4 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB0 PB1 PB2 PB10 
-                           PB11 PB12 PB13 PB14 
-                           PB15 PB6 PB7 PB8 
-                           PB9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_10 
-                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14 
-                          |GPIO_PIN_15|GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8 
-                          |GPIO_PIN_9;
+  /*Configure GPIO pins : PCPin PCPin */
+  GPIO_InitStruct.Pin = CS3_Pin|CS4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PBPin PBPin PBPin */
+  GPIO_InitStruct.Pin = CS5_Pin|CS6_Pin|CS7_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PB10 PB11 PB12 PB13 
+                           PB14 PB15 PB6 PB7 
+                           PB8 PB9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13 
+                          |GPIO_PIN_14|GPIO_PIN_15|GPIO_PIN_6|GPIO_PIN_7 
+                          |GPIO_PIN_8|GPIO_PIN_9;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PAPin PAPin PAPin PAPin 
+                           PAPin */
+  GPIO_InitStruct.Pin = RDY4_Pin|RDY3_Pin|RDY2_Pin|RDY1_Pin 
+                          |RDY0_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PD2 */
   GPIO_InitStruct.Pin = GPIO_PIN_2;

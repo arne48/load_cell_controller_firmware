@@ -3,8 +3,13 @@
   * File Name          : main.h
   * Description        : This file contains the common defines of the application
   ******************************************************************************
+  ** This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
   *
-  * COPYRIGHT(c) 2017 STMicroelectronics
+  * COPYRIGHT(c) 2018 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -44,38 +49,39 @@
 
 #define DEV0_RDY_Pin GPIO_PIN_14
 #define DEV0_RDY_GPIO_Port GPIOC
-#define CS7_Pin GPIO_PIN_0
-#define CS7_GPIO_Port GPIOC
-#define CS6_Pin GPIO_PIN_1
-#define CS6_GPIO_Port GPIOC
-#define CS5_Pin GPIO_PIN_2
-#define CS5_GPIO_Port GPIOC
-#define CS4_Pin GPIO_PIN_3
-#define CS4_GPIO_Port GPIOC
-#define RDY7_Pin GPIO_PIN_0
-#define RDY7_GPIO_Port GPIOA
-#define RDY6_Pin GPIO_PIN_1
-#define RDY6_GPIO_Port GPIOA
-#define RDY5_Pin GPIO_PIN_2
-#define RDY5_GPIO_Port GPIOA
-#define RDY4_Pin GPIO_PIN_3
-#define RDY4_GPIO_Port GPIOA
-#define CS3_Pin GPIO_PIN_6
+#define CS0_Pin GPIO_PIN_0
+#define CS0_GPIO_Port GPIOA
+#define CS1_Pin GPIO_PIN_1
+#define CS1_GPIO_Port GPIOA
+#define CS2_Pin GPIO_PIN_2
+#define CS2_GPIO_Port GPIOA
+#define CS3_Pin GPIO_PIN_4
 #define CS3_GPIO_Port GPIOC
-#define CS2_Pin GPIO_PIN_7
-#define CS2_GPIO_Port GPIOC
-#define CS1_Pin GPIO_PIN_8
-#define CS1_GPIO_Port GPIOC
-#define CS0_Pin GPIO_PIN_9
-#define CS0_GPIO_Port GPIOC
-#define RDY2_Pin GPIO_PIN_9
-#define RDY2_GPIO_Port GPIOA
-#define RDY1_Pin GPIO_PIN_10
-#define RDY1_GPIO_Port GPIOA
-#define RDY0_Pin GPIO_PIN_11
-#define RDY0_GPIO_Port GPIOA
-#define RDY3_Pin GPIO_PIN_12
+#define CS4_Pin GPIO_PIN_5
+#define CS4_GPIO_Port GPIOC
+#define CS5_Pin GPIO_PIN_0
+#define CS5_GPIO_Port GPIOB
+#define CS6_Pin GPIO_PIN_1
+#define CS6_GPIO_Port GPIOB
+#define CS7_Pin GPIO_PIN_2
+#define CS7_GPIO_Port GPIOB
+#define RDY7_Pin GPIO_PIN_7
+#define RDY7_GPIO_Port GPIOC
+#define RDY6_Pin GPIO_PIN_8
+#define RDY6_GPIO_Port GPIOC
+#define RDY5_Pin GPIO_PIN_9
+#define RDY5_GPIO_Port GPIOC
+#define RDY4_Pin GPIO_PIN_8
+#define RDY4_GPIO_Port GPIOA
+#define RDY3_Pin GPIO_PIN_9
 #define RDY3_GPIO_Port GPIOA
+#define RDY2_Pin GPIO_PIN_10
+#define RDY2_GPIO_Port GPIOA
+#define RDY1_Pin GPIO_PIN_11
+#define RDY1_GPIO_Port GPIOA
+#define RDY0_Pin GPIO_PIN_12
+#define RDY0_GPIO_Port GPIOA
+
 /* USER CODE BEGIN Private defines */
 
 #define BUFFER_SIZE_SPI3 64
@@ -107,6 +113,10 @@ struct Transducer_COM_Infos {
 
 //#define USING_READY_SIGNALS
 /* USER CODE END Private defines */
+
+void _Error_Handler(char *, int);
+
+#define Error_Handler() _Error_Handler(__FILE__, __LINE__)
 
 /**
   * @}

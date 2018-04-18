@@ -18,7 +18,7 @@
 					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.864789541." name="/" resourcePath="">
 						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.1604239848" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug">
 							<option id="fr.ac6.managedbuild.option.gnu.cross.prefix.1474198021" name="Prefix" superClass="fr.ac6.managedbuild.option.gnu.cross.prefix" useByScannerDiscovery="false" value="arm-none-eabi-" valueType="string" />
-							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.1551869939" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" useByScannerDiscovery="false" value="STM32F103RCYx" valueType="string" />
+							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.1551869939" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" useByScannerDiscovery="false" value="STM32F103RCTx" valueType="string" />
 							<option id="fr.ac6.managedbuild.option.gnu.cross.board.256316139" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" useByScannerDiscovery="false" value="Glowing_FW" valueType="string" />
 							<option id="fr.ac6.managedbuild.option.gnu.cross.instructionSet.1561244843" name="Instruction Set" superClass="fr.ac6.managedbuild.option.gnu.cross.instructionSet" useByScannerDiscovery="false" value="fr.ac6.managedbuild.option.gnu.cross.instructionSet.thumbII" valueType="enumerated" />
 							<option id="fr.ac6.managedbuild.option.gnu.cross.fpu.193993325" name="Floating point hardware" superClass="fr.ac6.managedbuild.option.gnu.cross.fpu" useByScannerDiscovery="false" value="fr.ac6.managedbuild.option.gnu.cross.fpu.no" valueType="enumerated" />
@@ -30,7 +30,7 @@
 								</outputEntries>
 							</builder>
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.2145959685" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler">
-								<option defaultValue="gnu.c.optimization.level.none" id="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level.1891395162" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="fr.ac6.managedbuild.gnu.c.optimization.level.none" valueType="enumerated" />
+								<option defaultValue="gnu.c.optimization.level.none" id="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level.1891395162" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="fr.ac6.managedbuild.gnu.c.optimization.level.debug" valueType="enumerated" />
 								<option id="gnu.c.compiler.option.debugging.level.4573904" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated" />
 								<option id="gnu.c.compiler.option.include.paths.1888943036" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="../Inc" />
@@ -55,7 +55,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.1061513958" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated" />
 							</tool>
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.linker.300292657" name="MCU GCC Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.linker">
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.linker.script.715432299" name="Linker Script (-T)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.linker.script" useByScannerDiscovery="false" value="../STM32F103RCYx_FLASH.ld" valueType="string" />
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.linker.script.715432299" name="Linker Script (-T)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.linker.script" useByScannerDiscovery="false" value="../STM32F103RCTx_FLASH.ld" valueType="string" />
 								<option id="gnu.c.link.option.libs.1126829993" name="Libraries (-l)" superClass="gnu.c.link.option.libs" useByScannerDiscovery="false" />
 								<option id="gnu.c.link.option.paths.1587855554" name="Library search path (-L)" superClass="gnu.c.link.option.paths" useByScannerDiscovery="false" />
 								<option id="gnu.c.link.option.ldflags.503419738" name="Linker flags" superClass="gnu.c.link.option.ldflags" useByScannerDiscovery="false" value="-specs=nosys.specs -specs=nano.specs" valueType="string" />
@@ -68,7 +68,7 @@
 							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.190571356" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver" />
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.1540810136" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler">
 								<option id="gnu.both.asm.option.include.paths.1216824360" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="" />
+									
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1262274302" superClass="cdt.managedbuild.tool.gnu.assembler.input" />
 								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.578535658" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input" />
@@ -102,7 +102,7 @@
 					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.release.953246569." name="/" resourcePath="">
 						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.release.2146291675" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.release">
 							<option id="fr.ac6.managedbuild.option.gnu.cross.prefix.1474198021" name="Prefix" superClass="fr.ac6.managedbuild.option.gnu.cross.prefix" value="arm-none-eabi-" valueType="string" />
-							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.1551869939" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" value="STM32F103RCYx" valueType="string" />
+							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.1551869939" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" value="STM32F103RCTx" valueType="string" />
 							<option id="fr.ac6.managedbuild.option.gnu.cross.board.256316139" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" value="Glowing_FW" valueType="string" />
 							<option id="fr.ac6.managedbuild.option.gnu.cross.instructionSet.1561244843" name="Instruction Set" superClass="fr.ac6.managedbuild.option.gnu.cross.instructionSet" value="fr.ac6.managedbuild.option.gnu.cross.instructionSet.thumbII" valueType="enumerated" />
 							<option id="fr.ac6.managedbuild.option.gnu.cross.fpu.193993325" name="Floating point hardware" superClass="fr.ac6.managedbuild.option.gnu.cross.fpu" value="fr.ac6.managedbuild.option.gnu.cross.fpu.no" valueType="enumerated" />
@@ -114,7 +114,7 @@
 								</outputEntries>
 							</builder>
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.2145959685" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler">
-								<option defaultValue="gnu.c.optimization.level.none" id="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level.1891395162" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="fr.ac6.managedbuild.gnu.c.optimization.level.none" valueType="enumerated" />
+								<option defaultValue="gnu.c.optimization.level.none" id="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level.1891395162" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="fr.ac6.managedbuild.gnu.c.optimization.level.debug" valueType="enumerated" />
 								<option id="gnu.c.compiler.option.debugging.level.4573904" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated" />
 								<option id="gnu.c.compiler.option.include.paths.1888943036" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="../Inc" />
@@ -139,7 +139,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.1061513958" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated" />
 							</tool>
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.linker.300292657" name="MCU GCC Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.linker">
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.linker.script.715432299" name="Linker Script (-T)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.linker.script" value="../STM32F103RCYx_FLASH.ld" valueType="string" />
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.linker.script.715432299" name="Linker Script (-T)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.linker.script" value="../STM32F103RCTx_FLASH.ld" valueType="string" />
 								<option id="gnu.c.link.option.libs.1126829993" name="Libraries (-l)" superClass="gnu.c.link.option.libs" />
 								<option id="gnu.c.link.option.paths.1587855554" name="Library search path (-L)" superClass="gnu.c.link.option.paths" />
 								<option id="gnu.c.link.option.ldflags.503419738" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="-specs=nosys.specs -specs=nano.specs" valueType="string" />
@@ -152,7 +152,7 @@
 							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.190571356" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver" />
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.1540810136" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler">
 								<option id="gnu.both.asm.option.include.paths.1216824360" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="" />
+									
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1262274302" superClass="cdt.managedbuild.tool.gnu.assembler.input" />
 								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.578535658" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input" />

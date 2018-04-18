@@ -4,8 +4,13 @@
   * Description        : This file provides code for the configuration
   *                      of the SPI instances.
   ******************************************************************************
+  ** This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
   *
-  * COPYRIGHT(c) 2017 STMicroelectronics
+  * COPYRIGHT(c) 2018 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -42,6 +47,10 @@
 
 /* USER CODE END 0 */
 
+SPI_HandleTypeDef hspi1;
+SPI_HandleTypeDef hspi3;
+DMA_HandleTypeDef hdma_spi3_rx;
+DMA_HandleTypeDef hdma_spi3_tx;
 
 /* SPI1 init function */
 void MX_SPI1_Init(void)
@@ -61,7 +70,7 @@ void MX_SPI1_Init(void)
   hspi1.Init.CRCPolynomial = 10;
   if (HAL_SPI_Init(&hspi1) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
 }
@@ -83,7 +92,7 @@ void MX_SPI3_Init(void)
   hspi3.Init.CRCPolynomial = 10;
   if (HAL_SPI_Init(&hspi3) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
 }
@@ -115,7 +124,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-    /* Peripheral interrupt init */
+    /* SPI1 interrupt Init */
     HAL_NVIC_SetPriority(SPI1_IRQn, 1, 0);
     HAL_NVIC_EnableIRQ(SPI1_IRQn);
   /* USER CODE BEGIN SPI1_MspInit 1 */
@@ -151,8 +160,8 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-    /* Peripheral DMA init*/
-  
+    /* SPI3 DMA Init */
+    /* SPI3_RX Init */
     hdma_spi3_rx.Instance = DMA2_Channel1;
     hdma_spi3_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
     hdma_spi3_rx.Init.PeriphInc = DMA_PINC_DISABLE;
@@ -163,11 +172,12 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     hdma_spi3_rx.Init.Priority = DMA_PRIORITY_VERY_HIGH;
     if (HAL_DMA_Init(&hdma_spi3_rx) != HAL_OK)
     {
-      Error_Handler();
+      _Error_Handler(__FILE__, __LINE__);
     }
 
     __HAL_LINKDMA(spiHandle,hdmarx,hdma_spi3_rx);
 
+    /* SPI3_TX Init */
     hdma_spi3_tx.Instance = DMA2_Channel2;
     hdma_spi3_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
     hdma_spi3_tx.Init.PeriphInc = DMA_PINC_DISABLE;
@@ -178,12 +188,12 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     hdma_spi3_tx.Init.Priority = DMA_PRIORITY_VERY_HIGH;
     if (HAL_DMA_Init(&hdma_spi3_tx) != HAL_OK)
     {
-      Error_Handler();
+      _Error_Handler(__FILE__, __LINE__);
     }
 
     __HAL_LINKDMA(spiHandle,hdmatx,hdma_spi3_tx);
 
-    /* Peripheral interrupt init */
+    /* SPI3 interrupt Init */
     HAL_NVIC_SetPriority(SPI3_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(SPI3_IRQn);
   /* USER CODE BEGIN SPI3_MspInit 1 */
@@ -210,9 +220,8 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7);
 
-    /* Peripheral interrupt Deinit*/
+    /* SPI1 interrupt Deinit */
     HAL_NVIC_DisableIRQ(SPI1_IRQn);
-
   /* USER CODE BEGIN SPI1_MspDeInit 1 */
 
   /* USER CODE END SPI1_MspDeInit 1 */
@@ -235,13 +244,12 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
 
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5);
 
-    /* Peripheral DMA DeInit*/
+    /* SPI3 DMA DeInit */
     HAL_DMA_DeInit(spiHandle->hdmarx);
     HAL_DMA_DeInit(spiHandle->hdmatx);
 
-    /* Peripheral interrupt Deinit*/
+    /* SPI3 interrupt Deinit */
     HAL_NVIC_DisableIRQ(SPI3_IRQn);
-
   /* USER CODE BEGIN SPI3_MspDeInit 1 */
 
   /* USER CODE END SPI3_MspDeInit 1 */
