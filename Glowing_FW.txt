@@ -1,0 +1,80 @@
+Configuration	Glowing_FW
+STM32CubeMX 	4.21.0
+Date	06/04/2018
+MCU	STM32F103RCTx
+
+
+
+PERIPHERALS	MODES	FUNCTIONS	PINS
+RCC	Crystal/Ceramic Resonator	RCC_OSC_IN	PD0-OSC_IN
+RCC	Crystal/Ceramic Resonator	RCC_OSC_OUT	PD1-OSC_OUT
+SPI1	Full-Duplex Master	SPI1_MISO	PA6
+SPI1	Full-Duplex Master	SPI1_MOSI	PA7
+SPI1	Full-Duplex Master	SPI1_SCK	PA5
+SPI3	Full-Duplex Slave	SPI3_MISO	PB4
+SPI3	Full-Duplex Slave	SPI3_MOSI	PB5
+SPI3	Full-Duplex Slave	SPI3_SCK	PB3
+SPI3	Hardware NSS Input Signal	SPI3_NSS	PA15
+SYS	Serial Wire	SYS_JTCK-SWCLK	PA14
+SYS	Serial Wire	SYS_JTMS-SWDIO	PA13
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+3	PC14-OSC32_IN	GPIO_Input	DEV0_RDY
+5	PD0-OSC_IN	RCC_OSC_IN	
+6	PD1-OSC_OUT	RCC_OSC_OUT	
+14	PA0-WKUP	GPIO_Output	CS0
+15	PA1	GPIO_Output	CS1
+16	PA2	GPIO_Output	CS2
+21	PA5	SPI1_SCK	
+22	PA6	SPI1_MISO	
+23	PA7	SPI1_MOSI	
+24	PC4	GPIO_Output	CS3
+25	PC5	GPIO_Output	CS4
+26	PB0	GPIO_Output	CS5
+27	PB1	GPIO_Output	CS6
+28	PB2	GPIO_Output	CS7
+38	PC7	GPIO_Input	RDY7
+39	PC8	GPIO_Input	RDY6
+40	PC9	GPIO_Input	RDY5
+41	PA8	GPIO_Input	RDY4
+42	PA9	GPIO_Input	RDY3
+43	PA10	GPIO_Input	RDY2
+44	PA11	GPIO_Input	RDY1
+45	PA12	GPIO_Input	RDY0
+46	PA13	SYS_JTMS-SWDIO	
+49	PA14	SYS_JTCK-SWCLK	
+50	PA15	SPI3_NSS	
+55	PB3	SPI3_SCK	
+56	PB4	SPI3_MISO	
+57	PB5	SPI3_MOSI	
+
+
+
+SOFTWARE PROJECT
+
+Project Settings : 
+Project Name : Glowing_FW
+Project Folder : /home/user/workspaces/eclipse_workspace/load_cell_controller_firmware
+Toolchain / IDE : SW4STM32
+Firmware Package Name and Version : STM32Cube FW_F1 V1.4.0
+
+
+Code Generation Settings : 
+STM32Cube Firmware Library Package : Copy only the necessary library files
+Generate peripheral initialization as a pair of '.c/.h' files per peripheral : Yes
+Backup previously generated files when re-generating : No
+Delete previously generated files when not re-generated : Yes
+Set all free pins as analog (to optimize the power consumption) : Yes
+
+
+Toolchains Settings : 
+Compiler Optimizations : Balanced Size/Speed
+
+
+
+
+
+

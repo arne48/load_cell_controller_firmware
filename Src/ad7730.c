@@ -5,8 +5,9 @@ void ad7730_setup(uint8_t device, struct Transducer_SS_Info device_infos[]) {
 }
 
 void ad7730_set_filter(uint8_t device, struct Transducer_SS_Info device_infos[]) {
-  //uint8_t conversion_command[3] = {0x08,0x43, 0x00};
-  uint8_t conversion_command[3] = {0x20,0x01, 0x00};
+  uint8_t conversion_command[3] = {0x08,0x43, 0x00}; //Best yet
+  //uint8_t conversion_command[3] = {0x80,0x00, 0x10}; //Max filter
+  //uint8_t conversion_command[3] = {0x20,0x01, 0x00}; //Conservative
   ad7730_write_register(device, REG_FILTER_REGISTER, conversion_command, device_infos);
 
 }

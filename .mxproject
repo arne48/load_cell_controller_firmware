@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=/home/user/workspaces/microcontroller/load_cell_controller_firmware/Inc
+HeaderPath=/home/user/workspaces/eclipse_workspace/load_cell_controller_firmware/Inc
 HeaderFiles=gpio.h;dma.h;spi.h;stm32f1xx_it.h;stm32f1xx_hal_conf.h;main.h;
-SourcePath=/home/user/workspaces/microcontroller/load_cell_controller_firmware/Src
+SourcePath=/home/user/workspaces/eclipse_workspace/load_cell_controller_firmware/Src
 SourceFiles=gpio.h;dma.h;spi.h;stm32f1xx_it.h;stm32f1xx_hal_conf.h;main.h;gpio.c;dma.c;spi.c;stm32f1xx_it.c;stm32f1xx_hal_msp.c;main.c;
 
 [PreviousLibFiles]
@@ -12,7 +12,7 @@ SourceFiles=../Src/main.c;../Src/gpio.c;../Src/dma.c;../Src/spi.c;../Src/stm32f1
 HeaderPath=../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;
 
 [PreviousUsedSW4STM32Files]
-SourceFiles=../Src/main.c;../Src/gpio.c;../Src/dma.c;../Src/spi.c;../Src/stm32f1xx_it.c;../Src/stm32f1xx_hal_msp.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi_ex.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c;../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c;../Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c;../Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xe.s;
-HeaderPath=../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;
+SourceFiles=../../../../../../Src/main.c;../../../../../../Src/gpio.c;../../../../../../Src/dma.c;../../../../../../Src/spi.c;../../../../../../Src/stm32f1xx_it.c;../../../../../../Src/stm32f1xx_hal_msp.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi_ex.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c;../../../../../../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c;../../../../../../Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c;../../../../../../Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xe.s;
+HeaderPath=../../../../../../Drivers/STM32F1xx_HAL_Driver/Inc;../../../../../../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../../../../../../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../../../../../../Drivers/CMSIS/Include;
 CDefines=__weak=&quot;__attribute__((weak))&quot;;__packed=&quot;__attribute__((__packed__))&quot;;
 

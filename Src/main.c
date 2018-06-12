@@ -57,7 +57,14 @@ uint8_t shadow_buffer_3_1[BUFFER_SIZE_SPI3];
 uint8_t tx_buffer_1[BUFFER_SIZE_SPI1];
 uint8_t rx_buffer_1[BUFFER_SIZE_SPI1];
 
-Controller_State slave_state = READ_CONFIG;
+uint8_t shadow_buffer_3_2[BUFFER_SIZE_SPI3] = {0,0,1,0,0,1,0,0,1,0,0,1,
+		0,0,1,0,0,1,0,0,1,0,0,1,
+		0,0,1,0,0,1,0,0,1,0,0,1,
+		0,0,1,0,0,1,0,0,1,0,0,1,
+		0,0,1,0,0,1,0,0,1,0,0,1,
+		0,0,0,0};
+
+Controller_State slave_state = MONITOR;
 uint8_t active_buffer = 0;
 uint8_t buffer_updated = 0;
 
@@ -163,6 +170,7 @@ int main(void)
     ad7730_softreset(dev_idx, slave_infos);
   }
   HAL_SPI_TransmitReceive_DMA(&hspi3, tx_buffer_3, rx_buffer_3, BUFFER_SIZE_SPI3);
+
   while (1) {
   /* USER CODE END WHILE */
 
@@ -196,6 +204,7 @@ int main(void)
           ad7730_write_register(dev_idx, REG_MODE_REGISTER, conversion_command, slave_infos);
         }
 
+        //TODO Make do while loop
         for (uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++) {
           while (HAL_GPIO_ReadPin(ready_infos[dev_idx].rdy_port, ready_infos[dev_idx].rdy_pin) == GPIO_PIN_SET) {
           }
