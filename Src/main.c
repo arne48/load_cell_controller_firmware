@@ -51,22 +51,48 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 uint8_t tx_buffer_3[BUFFER_SIZE_SPI3];
-uint8_t rx_buffer_3[BUFFER_SIZE_SPI3];
+
+/* RX_BUFFER FORMAT
+ * shadow_buffer[0:slave_state, 1:update_mode_params, 2-3:mode_params{w/o channel}, 4:update_filter_params, 5-7:filter_params]
+ */
+uint8_t rx_buffer_3[BUFFER_SIZE_SPI3] = {READ_CONFIG,0,0x51,0xB4,0,0x08,0x43,0x00, //Configuration row
+										 0,0,0,0,0,0,0,0,
+										 0,0,0,0,0,0,0,0,
+										 0,0,0,0,0,0,0,0,
+										 0,0,0,0,0,0,0,0,
+										 0,0,0,0,0,0,0,0,
+										 0,0,0,0,0,0,0,0,
+										 0,0,0,0,0,0,0,0};
+
+/* SHADOW_BUFFER FORMAT
+ * shadow_buffer[0...47:channel_1-16, 63:slave_state]
+ */
 uint8_t shadow_buffer_3_0[BUFFER_SIZE_SPI3];
 uint8_t shadow_buffer_3_1[BUFFER_SIZE_SPI3];
+
 uint8_t tx_buffer_1[BUFFER_SIZE_SPI1];
 uint8_t rx_buffer_1[BUFFER_SIZE_SPI1];
 
-uint8_t shadow_buffer_3_2[BUFFER_SIZE_SPI3] = {0,0,1,0,0,1,0,0,1,0,0,1,
-		0,0,1,0,0,1,0,0,1,0,0,1,
-		0,0,1,0,0,1,0,0,1,0,0,1,
-		0,0,1,0,0,1,0,0,1,0,0,1,
-		0,0,1,0,0,1,0,0,1,0,0,1,
-		0,0,0,0};
+/*
+ * DEBUG_BUFFER
+ */
+uint8_t shadow_buffer_3_2[BUFFER_SIZE_SPI3] = {0,0,1,0,0,1,0,0,
+											   1,0,0,1,0,0,1,0,
+											   0,1,0,0,1,0,0,1,
+											   0,0,1,0,0,1,0,0,
+											   1,0,0,1,0,0,1,0,
+											   0,1,0,0,1,0,0,1,
+											   0,0,1,0,0,1,0,0,
+											   1,0,0,1,0,0,0,0};
 
-Controller_State slave_state = MONITOR;
+Controller_State slave_state = READ_CONFIG;
 uint8_t active_buffer = 0;
 uint8_t buffer_updated = 0;
+
+// Parameters
+uint8_t AD7730_REGISTER_SIZE[TRANSDUCER_NUMBER] = {1, 3, 2, 3, 1, 3, 3, 3};
+uint8_t mode_register[2] = {0x51, 0xB4};
+uint8_t filter_register[3] = {0x08,0x43, 0x00};
 
 /* USER CODE END PV */
 
@@ -113,7 +139,19 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
         buffer_updated = 1;
         break;
     }
+
     set_state(rx_buffer_3[0]);
+    if (rx_buffer_3[1] != 0)
+    {
+    	mode_register[0] = rx_buffer_3[2];
+    	mode_register[1] = rx_buffer_3[3];
+    }
+    if (rx_buffer_3[4] != 0)
+    {
+    	filter_register[0] = rx_buffer_3[5];
+    	filter_register[1] = rx_buffer_3[6];
+    	filter_register[2] = rx_buffer_3[7];
+    }
   }
 
 }
@@ -200,13 +238,14 @@ int main(void)
         }
 
         for (uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++) {
-          uint8_t conversion_command[2] = { 0x51, 0xB4 | CHANNEL_A1 };
+          uint8_t conversion_command[2] = {mode_register[0], mode_register[1] | CHANNEL_A1};
           ad7730_write_register(dev_idx, REG_MODE_REGISTER, conversion_command, slave_infos);
         }
 
         //TODO Make do while loop
         for (uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++) {
           while (HAL_GPIO_ReadPin(ready_infos[dev_idx].rdy_port, ready_infos[dev_idx].rdy_pin) == GPIO_PIN_SET) {
+        	  //uint8_t dbg = dev_idx;
           }
           ad7730_read_register(dev_idx, REG_DATA_REGISTER, &tx_buffer_3[dev_idx * 6], slave_infos);
         }
@@ -218,12 +257,13 @@ int main(void)
         }
 
         for (uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++) {
-          uint8_t conversion_command[2] = { 0x51, 0xB4 | CHANNEL_A2 };
+          uint8_t conversion_command[2] = {mode_register[0], mode_register[1] | CHANNEL_A2};
           ad7730_write_register(dev_idx, REG_MODE_REGISTER, conversion_command, slave_infos);
         }
 
         for (uint8_t dev_idx = 0; dev_idx < TRANSDUCER_NUMBER; dev_idx++) {
           while (HAL_GPIO_ReadPin(ready_infos[dev_idx].rdy_port, ready_infos[dev_idx].rdy_pin) == GPIO_PIN_SET) {
+        	  //uint8_t dbg = dev_idx;
           }
           ad7730_read_register(dev_idx, REG_DATA_REGISTER, &tx_buffer_3[(dev_idx * 6) + 3], slave_infos);
         }

@@ -140,7 +140,9 @@ CHANNEL_A1 = 0x00,
 CHANNEL_A2 = 0x01
 } AD7730_ChannelIndexTypeDef;
 
-static uint8_t AD7730_REGISTER_SIZE[8] = {1, 3, 2, 3, 1, 3, 3, 3};
+extern uint8_t AD7730_REGISTER_SIZE[8];
+extern uint8_t filter_register[3];
+extern uint8_t mode_register[2];
 
 void ad7730_setup(uint8_t device, struct Transducer_SS_Info device_infos[]);
 void ad7730_softreset(uint8_t device, struct Transducer_SS_Info device_infos[]);
